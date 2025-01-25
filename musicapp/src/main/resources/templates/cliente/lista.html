@@ -1,0 +1,56 @@
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title> Clientes</title>
+        <link rel="stylesheet" href="/src/main/resources/static/css/style.css">
+        <link th:href="@{/css/styles.css}" rel="stylesheet"> 
+    </head>
+    <body>
+        <div class="container">
+            <h1>Lista de Cliente: </h1>
+
+            <div th:if="${mensagem}">
+                <p th:text="${mensagem}"></p>
+            </div>
+
+            <div>
+
+                <form th:action="@{/clientes/buscar}" method="get">
+                    <input type="text" name="nome" placeholder="Pesquisa pelo nome" required />
+                    <button type="submit">Pesquisar</button>
+                </form>
+
+                <a href="#" th:href="@{/clientes/novo}">Cadastrar novo Cliente</a>
+            </div>        
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Código</th>
+                        <th>Nome</th>
+                        <th>Nascimento</th>
+                        <th>Email</th>
+                        <th>Senha</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="cliente : ${clientes}">
+                        <td th:text="${cliente.idUsuario}">Código</td>
+                        <td th:text="${cliente.nomeUsuario}">Nome</td>
+                        <td th:text="${cliente.dtNascimento}">Nascimento</td>
+                        <td th:text="${cliente.email}">Email</td>
+                        <td th:text="${cliente.senha}">Senha</td>
+                        <td>
+                            <a th:href="@{/clientes/editar/{codigo}(codigo=${cliente.idUsuario})}">Editar</a>
+                                                    
+                            <form th:action="@{/clientes/excluir/{codigo}(codigo=${cliente.idUsuario})}" method="post" 
+                            style="display:inline;">
+                                <button type="submit">Excluir</button>
+                            </form>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </body>
+</html>
